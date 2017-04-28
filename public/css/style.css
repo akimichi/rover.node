@@ -1,0 +1,55 @@
+body {
+  padding: 50px;
+  font: 20px "Lucida Grande", Helvetica, Arial, sans-serif;
+  background-color: lightyellow;
+}
+
+a {
+  color: #00B7FF0B
+}
+
+h1,h2 {
+ color: #5F4C0B;
+ text-align: center;
+}
+
+
+.menu {
+	overflow: hidden;
+  height:140px;
+}
+
+.box {
+  margin: 0px;
+	float: left;
+}
+
+
+// joystick
+.zone {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0;
+}
+.zone.active {
+  display: block;
+}
+.zone > h1 {
+  position: absolute;
+  padding: 10px 10px;
+  margin: 0;
+  color: white;
+  right: 0;
+  bottom: 0;
+}
+.zone.dynamic {
+  background: rgba(0, 0, 255, 0.1);
+}
+.zone.semi {
+  background: rgba(255, 255, 255, 0.1);
+}
+.zone.static {
+  background: rgba(255, 0, 0, 0.1);
+} 
+

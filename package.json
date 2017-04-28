@@ -2,9 +2,10 @@
   "name": "rover.node",
   "version": "1.0.0",
   "description": "rover application with node.js",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
-    "test": "mocha test"
+    "test": "mocha test",
+    "start": "node app.js"
   },
   "repository": {
     "type": "git",
@@ -16,6 +17,13 @@
   "author": "Akimichi Tatsukawa",
   "license": "ISC",
   "dependencies": {
-    "johnny-five": "0.10.10"
+    "body-parser": "1.17.1",
+    "errorhandler": "1.5.0",
+    "express": "4.15.2",
+    "johnny-five": "0.10.10",
+    "morgan": "1.8.1",
+    "opencv": "6.0.0",
+    "pug": "0.1.0",
+    "socket.io": "1.7.3"
   }
 }
