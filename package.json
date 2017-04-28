@@ -1,0 +1,21 @@
+{
+  "name": "rover.node",
+  "version": "1.0.0",
+  "description": "rover application with node.js",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "http://gitbucket.homeunix.net/git/emile/rover.node.git"
+  },
+  "keywords": [
+    "johnny-five"
+  ],
+  "author": "Akimichi Tatsukawa",
+  "license": "ISC",
+  "dependencies": {
+    "johnny-five": "0.10.10"
+  }
+}
