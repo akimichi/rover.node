@@ -3,12 +3,12 @@ extends layout
 block append scripts
   // script(src="/js/index.js")
   script(src='/js/socket.io.js')
-  script(src="/js/nipplejs.js")
+  // script(src="/js/nipplejs.js")
   // script(src="/js/joystick.js")
 
 block append style
   link(rel='stylesheet', href='/css/style.css')
 
 block content
-  img(src="http://localhost:8080/?action=stream")
+  img(src="http://rover.local:8080/?action=stream")
 
