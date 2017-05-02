@@ -7,9 +7,12 @@ export LD_LIBRARY_PATH="/home/emile/local/bin/mjpg-streamer-experimental"
 STREAMER="$LD_LIBRARY_PATH/mjpg_streamer"
  
 # Pi camera configurations
-XRES="640"
-YRES="480"
+# XRES="640"
+# YRES="480"
+XRES="320"
+YRES="240"
 FPS="10"
+ANGLE="180"
  
 # Web configurations
 WWWDOC="$LD_LIBRARY_PATH/www"
@@ -18,6 +21,6 @@ USER="user"
 PASS="password"
  
 # Start streaming
-$STREAMER -i "input_raspicam.so -x $XRES -y $YRES -fps $FPS" \
+$STREAMER -i "input_raspicam.so -x $XRES -y $YRES -fps $FPS" -rot $ANGLE \
           -o "output_http.so -w $WWWDOC -p $PORT"
 

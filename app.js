@@ -17,6 +17,8 @@ app.set('view engine', 'pug');
 app.set('views', __dirname + '/views');
 app.use(morgan('dev'));
 app.use(express.static(__dirname + '/public'));
+// bowerでインストールされたライブラリーを利用する
+app.use('/bower_components',  express.static(__dirname + '/bower_components'));
 
 // POSTでdataを受け取るための記述
 app.use(bodyParser.urlencoded({ extended: true }));

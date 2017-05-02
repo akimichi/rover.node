@@ -1,0 +1,28 @@
+{
+  "name": "rover.node",
+  "description": "rover application with node.js",
+  "main": "app.js",
+  "authors": [
+    "Akimichi Tatsukawa"
+  ],
+  "license": "ISC",
+  "keywords": [
+    "johnny-five"
+  ],
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "^3.2.1",
+    "socket.io": "^1.7.3",
+    "nipplejs": "^0.6.7",
+    "bootstrap": "^3.3.7",
+    "jquery-ui": "^1.12.1",
+    "socket.io-client": "^1.7.2"
+  }
+}
