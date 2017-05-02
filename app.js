@@ -30,7 +30,25 @@ app.get('/', (req, res) => {
     title: 'コントローラ',
   });
 });
-//
+
+board.on('ready', () => {
+  io.on('connection', (client) => {
+    let servo = new five.Servo({
+      pin: 6,
+      range: [0, 180],
+      invert: true,
+      startAt: 60
+    });
+    client.on('slider', (data) => {
+      var slider = JSON.parse(data);
+      var angle = 100 - slider.value;
+      console.log(angle);
+      servo.to(angle, 500);
+    });
+  });
+});
+
+
 // 5000番を指定
 const port = process.env.PORT || 5000;
 http.listen(port);

@@ -1,7 +1,22 @@
 extends layout
 
+block scripts
+  script(src='/bower_components/jquery/dist/jquery.js')
+  script(src='/bower_components/jquery-ui/jquery-ui.js')
+  script(src='/bower_components/socket.io-client/dist/socket.io.js')
+  script(src='/bower_components/bootstrap/dist/js/bootstrap.js')
+  script(src='/js/index.js')
 
 block content
-  .row
-    img(src="http://rover.local:8080/?action=stream")
+  .container
+    .row
+      .col-lg-2
+      .col-lg-8
+        img(src="http://rover.local:8080/?action=stream")
+      .col-lg-2
+        p
+          label(for="amount")
+            input( type="text" id="amount" readonly style="border:0; color:#f6931f; font-weight:bold;")
+            | カメラチルト
+        #slider-vertical(style="height:200px;")
 
