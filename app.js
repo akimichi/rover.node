@@ -11,8 +11,9 @@ const exec = require('child_process').exec;
 const config = require('config');
 const morgan = require('morgan');
 // opencv
+// const gm = require('gm');
+// const gm = require('gm').subClass({imageMagick: true});
 const cv = require('opencv');
-// const camera = new cv.VideoCapture(0);
 const camera = new cv.VideoCapture(0);
 // const camera = capture.open("http://rover.local:8080/?action=stream");
 
@@ -40,11 +41,23 @@ app.get('/', (req, res) => {
 
 board.on('ready', () => {
   io.on('connection', (client) => {
-    // const raspistill = exec('raspistill -o ./public/data/output.jpg -h 480 -w 640 -t 100 -n');
     const takeshot = () => {
       camera.read((error, image) => {
         if(image) {
           image.save('./public/data/shot.jpg');
+          // gm('./public/data/shot-original.jpg').autoOrient().write('./public/data/shot.jpg', (err) => {
+          //   if (err) console.log('aaw, shucks');
+          // });
+          // image.save('./public/data/shot.jpg');
+          // cv.readImage("./public/data/shot.jpg", (err, shot) => {
+          //   shot.detectObject(cv.FACE_CASCADE, {}, (err, faces) => {
+          //     for (var i=0;i<faces.length; i++){
+          //       var x = faces[i]
+          //       shot.ellipse(x.x + x.width/2, x.y + x.height/2, x.width/2, x.height/2);
+          //     }
+          //     shot.save('./public/data/shot.jpg');
+          //   });
+          // })
           fs.readFile('./public/data/shot.jpg', (err, buf) => {
             io.emit('shot', { image: true, buffer: buf.toString('base64')});
           });
