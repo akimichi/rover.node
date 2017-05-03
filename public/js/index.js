@@ -1,6 +1,9 @@
 $( function() {
   var server = io("http://rover.local:5000");
 
+  server.on('shot', function(data){
+     $("#image").attr('src', 'data:image/jpg;base64,' + data.buffer );
+  });
   server.on('connect', function(data){
     $( "#slider-vertical" ).slider({
       orientation: "vertical",
@@ -13,6 +16,6 @@ $( function() {
         $( "#amount" ).val( ui.value );
       }
     });
+    $( "#amount" ).val( $( "#slider-vertical" ).slider( "value" ) );
   });
-  $( "#amount" ).val( $( "#slider-vertical" ).slider( "value" ) );
 } );

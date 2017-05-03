@@ -6,6 +6,8 @@ const http = require('http').Server(app);
 const io = require('socket.io')(http);
 const bodyParser = require('body-parser');
 const errorHandler = require('errorhandler');
+const fs = require('fs');
+const exec = require('child_process').exec;
 const config = require('config');
 const morgan = require('morgan');
 // opencv
@@ -38,16 +40,19 @@ app.get('/', (req, res) => {
 
 board.on('ready', () => {
   io.on('connection', (client) => {
-    camera.read((error, image) => {
-      if(image) {
-        image.save('/tmp/test.jpg');
-      }
-      // fs.readFile('test.jpg', 'base64', (err, image) => {
-      //   socket.write(image, 'base64', function(){
-      //     socket.end();
-      //   });
-      // });
-    });
+    // const raspistill = exec('raspistill -o ./public/data/output.jpg -h 480 -w 640 -t 100 -n');
+    const takeshot = () => {
+      camera.read((error, image) => {
+        if(image) {
+          image.save('./public/data/shot.jpg');
+          fs.readFile('./public/data/shot.jpg', (err, buf) => {
+            io.emit('shot', { image: true, buffer: buf.toString('base64')});
+          });
+        }
+      });
+    };
+    setInterval(takeshot, 1000);
+    //takeshot();
     let servo = new five.Servo({
       pin: 6,
       range: [0, 180],
