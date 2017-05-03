@@ -44,22 +44,35 @@ board.on('ready', () => {
     const takeshot = () => {
       camera.read((error, image) => {
         if(image) {
-          // image.save('./public/data/shot.jpg');
-            image.detectObject(cv.FACE_CASCADE, {}, (err, faces) => {
-              for (var i=0;i<faces.length; i++){
-                var x = faces[i]
-                image.ellipse(x.x + x.width/2, x.y + x.height/2, x.width/2, x.height/2);
-              }
-              //io.emit('shot', { image: true, buffer: image.toString('base64')});
-              image.save('./public/data/shot.jpg');
-              fs.readFile('./public/data/shot.jpg', (err, buf) => {
-                io.emit('shot', { image: true, buffer: buf.toString('base64')});
-              });
-            });
-          }
+          var canny = image.copy();
+          // image.gaussianBlur([7,7]);
+          canny.convertHSVscale() 
+          // const lower_hsv_threshold = [40, 70, 70];
+          // const upper_hsv_threshold = [80, 200, 200];
+          // const lower_hsv_threshold = [29, 86, 6];
+          // const upper_hsv_threshold = [64, 255, 255];
+          const lower_hsv_threshold = [0.11*256, 0.60*256, 0.20*256];
+          const upper_hsv_threshold = [0.14*256, 1.00*256, 1.00*256];
+          canny.inRange(lower_hsv_threshold, upper_hsv_threshold)
+          var contours = canny.findContours();
+          canny.save('./public/data/shot.jpg');
+          fs.readFile('./public/data/shot.jpg', (err, buf) => {
+            io.emit('shot', { image: true, buffer: buf.toString('base64')});
+          });
+          // image.detectObject(cv.FACE_CASCADE, {}, (err, faces) => {
+          //   for (var i=0;i<faces.length; i++){
+          //     var x = faces[i]
+          //     image.ellipse(x.x + x.width/2, x.y + x.height/2, x.width/2, x.height/2);
+          //   }
+          //   image.save('./public/data/shot.jpg');
+          //   fs.readFile('./public/data/shot.jpg', (err, buf) => {
+          //     io.emit('shot', { image: true, buffer: buf.toString('base64')});
+          //   });
+          // });
+        }
       });
     };
-    setInterval(takeshot, 1000);
+    setInterval(takeshot, 500);
     //takeshot();
     let servo = new five.Servo({
       pin: 6,
