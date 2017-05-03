@@ -44,24 +44,19 @@ board.on('ready', () => {
     const takeshot = () => {
       camera.read((error, image) => {
         if(image) {
-          image.save('./public/data/shot.jpg');
-          // gm('./public/data/shot-original.jpg').autoOrient().write('./public/data/shot.jpg', (err) => {
-          //   if (err) console.log('aaw, shucks');
-          // });
           // image.save('./public/data/shot.jpg');
-          // cv.readImage("./public/data/shot.jpg", (err, shot) => {
-          //   shot.detectObject(cv.FACE_CASCADE, {}, (err, faces) => {
-          //     for (var i=0;i<faces.length; i++){
-          //       var x = faces[i]
-          //       shot.ellipse(x.x + x.width/2, x.y + x.height/2, x.width/2, x.height/2);
-          //     }
-          //     shot.save('./public/data/shot.jpg');
-          //   });
-          // })
-          fs.readFile('./public/data/shot.jpg', (err, buf) => {
-            io.emit('shot', { image: true, buffer: buf.toString('base64')});
-          });
-        }
+            image.detectObject(cv.FACE_CASCADE, {}, (err, faces) => {
+              for (var i=0;i<faces.length; i++){
+                var x = faces[i]
+                image.ellipse(x.x + x.width/2, x.y + x.height/2, x.width/2, x.height/2);
+              }
+              //io.emit('shot', { image: true, buffer: image.toString('base64')});
+              image.save('./public/data/shot.jpg');
+              fs.readFile('./public/data/shot.jpg', (err, buf) => {
+                io.emit('shot', { image: true, buffer: buf.toString('base64')});
+              });
+            });
+          }
       });
     };
     setInterval(takeshot, 1000);
