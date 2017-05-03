@@ -8,6 +8,11 @@ const bodyParser = require('body-parser');
 const errorHandler = require('errorhandler');
 const config = require('config');
 const morgan = require('morgan');
+// opencv
+const cv = require('opencv');
+// const camera = new cv.VideoCapture(0);
+const camera = new cv.VideoCapture(0);
+// const camera = capture.open("http://rover.local:8080/?action=stream");
 
 const five = require("johnny-five"); // Load the node library that lets us talk JS to the Arduino
 const board = new five.Board(); // Connect to the Arduino using that library
@@ -33,6 +38,16 @@ app.get('/', (req, res) => {
 
 board.on('ready', () => {
   io.on('connection', (client) => {
+    camera.read((error, image) => {
+      if(image) {
+        image.save('/tmp/test.jpg');
+      }
+      // fs.readFile('test.jpg', 'base64', (err, image) => {
+      //   socket.write(image, 'base64', function(){
+      //     socket.end();
+      //   });
+      // });
+    });
     let servo = new five.Servo({
       pin: 6,
       range: [0, 180],
@@ -42,7 +57,6 @@ board.on('ready', () => {
     client.on('slider', (data) => {
       var slider = JSON.parse(data);
       var angle = 100 - slider.value;
-      console.log(angle);
       servo.to(angle, 500);
     });
   });
